@@ -1,10 +1,21 @@
 #include <ESP8266HTTPClient.h>
 #include <ESP8266WiFi.h>
+#include "DHT.h"
+
+const char* ssid = "epicodus";
+const char* password = "studyhard";
+
+#define DHTPIN 4     // what digital pin the DHT22 is conected to
+#define DHTTYPE DHT22   // there are multiple kinds of DHT sensors
+
+DHT dht(DHTPIN, DHTTYPE);
 
 void setup() {
 
-  Serial.begin(115200);                                  //Serial connection
-  WiFi.begin("yourSSID", "yourPASS");   //WiFi connection
+  Serial.begin(115200);
+  delay(10);
+                                    //Serial connection
+  WiFi.begin("ssid", "password");   //WiFi connection
 
   while (WiFi.status() != WL_CONNECTED) {  //Wait for the WiFI connection completion
 
@@ -12,6 +23,8 @@ void setup() {
     Serial.println("Waiting for connection");
 
   }
+  Serial.println("");
+  Serial.println("WiFi connected");
 
 }
 
@@ -21,10 +34,15 @@ void loop() {
 
    HTTPClient http;    //Declare object of class HTTPClient
 
-   http.begin("http://192.168.1.88:8085/hello");      //Specify request destination
-   http.addHeader("Content-Type", "text/plain");  //Specify content-type header
+   http.begin("https://weather-station-.herokuapp.com/readings");      //Specify request destination
+   http.addHeader("Content-Type", "application/json");  //Specify content-type header
 
-   int httpCode = http.POST("Message from ESP8266");   //Send the request
+   float h;
+   float f;
+   h = dht.readHumidity();
+   f = dht.readTemperature(true);
+
+   int httpCode = http.POST("{temperature: " + f + "}");   //Send the request
    String payload = http.getString();                  //Get the response payload
 
    Serial.println(httpCode);   //Print HTTP return code
