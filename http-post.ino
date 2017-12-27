@@ -3,7 +3,7 @@
 #include "DHT.h"
 
 const char* ssid = "epicodus";
-const char* password = "studyhard";
+const char* password = "stayfocused";
 
 #define DHTPIN D4     // what digital pin the DHT22 is conected to
 #define DHTTYPE DHT22   // there are multiple kinds of DHT sensors
@@ -15,7 +15,7 @@ void setup() {
   Serial.begin(115200);
   delay(10);
                                     //Serial connection
-  WiFi.begin("ssid", "password");   //WiFi connection
+  WiFi.begin(ssid, password);   //WiFi connection
 
   while (WiFi.status() != WL_CONNECTED) {  //Wait for the WiFI connection completion
 
@@ -34,7 +34,7 @@ void loop() {
 
    HTTPClient http;    //Declare object of class HTTPClient
 
-   http.begin("https://weather-station-.herokuapp.com/readings");      //Specify request destination
+   http.begin("http://weather-station-.herokuapp.com/readings");      //Specify request destination
    http.addHeader("Content-Type", "application/json");  //Specify content-type header
 
    float h;
