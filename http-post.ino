@@ -42,7 +42,8 @@ void loop() {
    h = dht.readHumidity();
    f = dht.readTemperature(true);
 
-   int httpCode = http.POST("{temperature: " + f + "}");   //Send the request
+
+   int httpCode = http.POST("{\"temperature\":" + String(t) + ",\"humidity\":" + String(h) + "}");   //Send the request
    String payload = http.getString();                  //Get the response payload
 
    Serial.println(httpCode);   //Print HTTP return code

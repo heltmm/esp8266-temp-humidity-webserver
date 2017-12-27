@@ -3,7 +3,7 @@
 #include <DHT.h>
 
 #define DHTTYPE DHT22
-#define DHTPIN  2
+#define DHTPIN  D2
 #define SLEEP_DELAY_IN_SECONDS  30
 
 unsigned long previousMillis = 0;
@@ -20,7 +20,7 @@ const char* mqtt_topic = "5a42f6eb89c48841a600005c";  // device id
 
 WiFiClient espClient;
 PubSubClient client(espClient);
-DHT dht(DHTPIN, DHTTYPE, 11);
+DHT dht(DHTPIN, DHTTYPE, 22);
 
 String dataString;
 char charBuf[100];
