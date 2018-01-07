@@ -34,8 +34,8 @@ void loop() {
 
    HTTPClient http;    //Declare object of class HTTPClient
 
-   http.begin("http://weather-station-.herokuapp.com/readings");      //Specify request destination
-   http.addHeader("Content-Type", "application/json");  //Specify content-type header
+   http.begin("http://weather-station-.herokuapp.com/devices/1/readings");      //Specify request destination
+   http.addHeader("Content-Type", "application/json", "api_key", "F52NQQ0Ry1SMTguKQiQO4gtt");  //Specify content-type header
 
    float h;
    float f;
@@ -43,7 +43,7 @@ void loop() {
    f = dht.readTemperature(true);
 
 
-   int httpCode = http.POST("{\"temperature\":" + String(t) + ",\"humidity\":" + String(h) + "}");   //Send the request
+   int httpCode = http.POST("{\"temperature\":" + String(t) + ",\"humidity\":" + String(h) + ",\"device_id\":" + "1" + "}");   //Send the request
    String payload = http.getString();                  //Get the response payload
 
    Serial.println(httpCode);   //Print HTTP return code
