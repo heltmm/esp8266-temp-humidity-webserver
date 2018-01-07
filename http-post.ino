@@ -2,8 +2,8 @@
 #include <ESP8266WiFi.h>
 #include "DHT.h"
 
-const char* ssid = "epicodus";
-const char* password = "stayfocused";
+const char* ssid = "Quincy";
+const char* password = "7608804370";
 
 #define DHTPIN D4     // what digital pin the DHT22 is conected to
 #define DHTTYPE DHT22   // there are multiple kinds of DHT sensors
@@ -35,7 +35,8 @@ void loop() {
    HTTPClient http;    //Declare object of class HTTPClient
 
    http.begin("http://weather-station-.herokuapp.com/devices/1/readings");      //Specify request destination
-   http.addHeader("Content-Type", "application/json", "api_key", "F52NQQ0Ry1SMTguKQiQO4gtt");  //Specify content-type header
+   http.addHeader("Content-Type", "application/json");  //Specify content-type header
+   http.addHeader("api_key", "F52NQQ0Ry1SMTguKQiQO4gtt");
 
    float h;
    float f;
@@ -43,7 +44,7 @@ void loop() {
    f = dht.readTemperature(true);
 
 
-   int httpCode = http.POST("{\"temperature\":" + String(t) + ",\"humidity\":" + String(h) + ",\"device_id\":" + "1" + "}");   //Send the request
+   int httpCode = http.POST("{\"temperature\":" + String(f) + ",\"humidity\":" + String(h)  + ",\"device_id\":" + "1" "}");   //Send the request
    String payload = http.getString();                  //Get the response payload
 
    Serial.println(httpCode);   //Print HTTP return code
@@ -57,6 +58,7 @@ void loop() {
 
  }
 
-  delay(30000);  //Send a request every 30 seconds
+  //delay(30000);  //Send a request every 30 seconds
+  delay(300000); //Send a request every 5 minutes
 
 }
